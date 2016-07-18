@@ -47,10 +47,40 @@ class HuffmanSuite extends FunSuite {
     assert(combine(leaflist) === List(Fork(Leaf('e',1),Leaf('t',2),List('e', 't'),3), Leaf('x',4)))
   }
 
+  test("until") {
+    val leaflist = createCodeTree(List('a', 'b', 'c'))
+//    println(until(singleton, combine)(List(leaflist)))
+    assert(1 === 1)
+  }
+
+  test("decode secret") {
+    new TestTrees {
+//      println(decodedSecret)
+      assert(decode(t2, List(0, 0, 0, 1, 1)) === "abd".toList)
+    }
+  }
+
+  test("encode it") {
+    new TestTrees {
+      assert(encode(t2)("abdabd".toList) === List(0, 0, 0, 1, 1, 0, 0, 0, 1, 1))
+    }
+  }
 
   test("decode and encode a very short text should be identity") {
     new TestTrees {
       assert(decode(t1, encode(t1)("ab".toList)) === "ab".toList)
+    }
+  }
+
+  test("convert: code table is created correctly") {
+    new TestTrees {
+      assert(convert(t2) === List(('a',List(0, 0)), ('b',List(0, 1)), ('d',List(1))))
+    }
+  }
+
+  test("quick encode gives the correct byte sequence") {
+    new TestTrees {
+      assert(quickEncode(t2)("abdabd".toList) === List(0, 0, 0, 1, 1, 0, 0, 0, 1, 1))
     }
   }
 
